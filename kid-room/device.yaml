@@ -1,0 +1,16 @@
+##########################
+######### Device #########
+##########################
+
+esphome:
+  name: ${device_name}
+  friendly_name: "${friendly_name}"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+# Default logging level
+logger:
+  level: ${log_level}

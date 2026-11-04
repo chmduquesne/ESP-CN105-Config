@@ -21,12 +21,15 @@ sensor:
   - platform: uptime
     name: "${friendly_name} Uptime"
     internal: true # Hides from Homeassistant
+  - platform: homeassistant
+    id: remote_temp
+    entity_id: ${remote_temperature_entity_id}
 
 # Climate entity configuration
 climate:
   - platform: cn105
     id: hp
-    name: "${friendly_name}"
+    name: None # use the device friendly name as-is, avoids "X AC X AC" in HA
     icon: mdi:heat-pump
     visual:
       min_temperature: 10 # Adjust to your unit's min temp. SmartSet units can go to 10C for heating
@@ -35,6 +38,8 @@ climate:
         target_temperature: 1
         current_temperature: 0.5
     # Timeout and communication settings
+    remote_temperature_source:
+      sensor_id: remote_temp
     remote_temperature_timeout: 30min
     update_interval: 2s
     debounce_delay : 100ms

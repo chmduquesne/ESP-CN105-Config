@@ -1,0 +1,21 @@
+##########################
+######### Main ###########
+##########################
+
+substitutions:
+  device_name: kid-room-ac
+  friendly_name: Kid Room AC
+  log_level: INFO
+  remote_temperature_entity_id: sensor.thermometer_kid_room_temperature
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption
+
+# Include external files
+<<: !include device.yaml
+<<: !include climate.yaml
+<<: !include connection.yaml
+
+# `secrets.yaml` will be included automatically

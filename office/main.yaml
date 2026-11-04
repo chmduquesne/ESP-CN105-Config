@@ -1,0 +1,21 @@
+##########################
+######### Main ###########
+##########################
+
+substitutions:
+  device_name: office-ac
+  friendly_name: Office AC
+  log_level: INFO
+  remote_temperature_entity_id: sensor.thermometer_office_temperature
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption
+
+# Include external files
+<<: !include device.yaml
+<<: !include climate.yaml
+<<: !include connection.yaml
+
+# `secrets.yaml` will be included automatically
