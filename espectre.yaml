@@ -1,0 +1,55 @@
+##########################
+####### ESPectre #########
+##########################
+# Wi-Fi CSI motion detection, pinned to a release tag.
+# https://github.com/francescopace/espectre
+#
+# Includes diagnostics to watch heap, uptime, reboot reason and Wi-Fi signal.
+# Optional add-on, not part of any room by default.
+# See Espectre.md for findings and how to enable it in a room:
+#   packages:
+#     espectre: !include ../espectre.yaml
+# Declaring `espectre:` creates its default entities (motion, movement,
+# recalibrate, diagnostics...).
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/francescopace/espectre
+      ref: 3.1.0
+      path: src/cpp/frontend/esphome/components
+    components: [espectre]
+
+esp32:
+  cpu_frequency: 240MHz # as in the upstream ESP32 example
+
+espectre:
+  detection_algorithm: lightweight
+  traffic_generator_mode: ping
+  evaluation_interval_ms: 250
+  direct_api: false # skip the extra HTTP/SSE server, HA API is enough
+
+# Stability diagnostics
+debug:
+
+sensor:
+  - platform: uptime
+    name: "Uptime"
+    entity_category: diagnostic
+    update_interval: 60s
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    entity_category: diagnostic
+    update_interval: 60s
+  - platform: debug
+    free:
+      name: "Heap Free"
+    block:
+      name: "Heap Largest Block"
+    loop_time:
+      name: "Loop Time"
+
+text_sensor:
+  - platform: debug
+    reset_reason:
+      name: "Reset Reason"

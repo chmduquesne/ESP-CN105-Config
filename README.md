@@ -15,6 +15,10 @@ Each room is its own self-contained directory, with its own `main.yaml`, its own
 - `kid-room/`
 - `office/`
 
+## Optional: ESPectre motion detection
+
+Wi-Fi based motion detection is available as an optional add-on (`espectre.yaml`), disabled in every room for now. See [Espectre.md](Espectre.md) for how to enable it in a room, the test findings, and the known conflict with the CN105 component.
+
 ## Remote room temperature (Zigbee sensors)
 
 Each device's `main.yaml` has a `remote_temperature_entity_id` substitution used to feed a Home Assistant sensor entity (e.g. a Zigbee thermometer) into the heat pump as the reference temperature, instead of relying on the indoor unit's own built-in sensor. It ships as a placeholder (`sensor.CHANGE_ME_<room>_temperature`) - replace it with your room's actual entity ID, then `make compile`/`make upload` that device for it to take effect. If the sensor stops updating, the unit falls back to its internal sensor after `remote_temperature_timeout` (set in `climate.yaml`).
